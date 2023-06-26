@@ -3,6 +3,11 @@ import(
 	"fmt"
 )
 func main(){
+	// default 
+	var numberone int
+	numberone=10
+	fmt.Println("number one",numberone)
+	
 	// declaring and initializing a variable in single line
 	var numbertwo int = 30
 	fmt.Println("number second",numbertwo)
@@ -20,4 +25,8 @@ func main(){
 	*/
 	numberthree:=20
 	fmt.Println("number three",numberthree)	
+
+	// constants
+	const pi = 3.1415
+
 }
