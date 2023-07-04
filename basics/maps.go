@@ -43,4 +43,12 @@ func main() {
 	nestedMap["person2"]["name"] = "Jane"
 	nestedMap["person2"]["age"] = "25"
 	fmt.Println("Nested Map:", nestedMap)
+
+	interfacemap := make(map[string]map[string]interface{}, 0)
+	interfacemap1 := make(map[string]interface{}, 0)
+	interfacemap1["key1"] = "value1"
+	interfacemap["outerkey1"] = interfacemap1
+
+	fmt.Println("interface map", interfacemap)
+
 }
