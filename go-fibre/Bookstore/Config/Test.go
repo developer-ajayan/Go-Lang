@@ -4,6 +4,6 @@ import (
 	"fmt"
 )
 
-func Pp1(msg string) {
+func PP(msg string) {
 	fmt.Print(msg)
 }

@@ -1,7 +1,0 @@
-Books
------
-1.Create Books
-2.Update Books
-3.Delete Books
-4.List Books
-5.Detail View

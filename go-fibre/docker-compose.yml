@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  bookstoreapi:
+    build :
+      context: ./Bookstore
+    container_name: bookstoreapi
+    # ports:
+    #   - "3000:3000"
+    depends_on:
+      - bookstoredb
+
+  bookstoredb:
+    image: bookstorepostgres
+    container_name: bookstoredb
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=bookstoredb
+    ports:
+      - '5435:5432'
+    volumes: 
+      - ./db:/var/lib/postgresql/data
+
+  apigateway:
+    image: nginx
+    container_name: apigateway
+    volumes:
+      - ./nginx:/etc/nginx
+    ports:
+      - "3000:80"
+    depends_on:
+      - bookstoreapi
+    deploy:
+      # Best practice because it is possible that upstreams aren't ready yet
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10 
