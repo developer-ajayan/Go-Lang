@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+
+// slices are a dynamically sized flexible wa of view array elements
+
 func main() {
 	var slice []int
 	slice = append(slice, 1, 2, 3)
