@@ -22,6 +22,9 @@ func main() {
 	fmt.Println("Map after deletion:", emptyMap)
 
 	// Check if a key exists in the map
+	// _, present := emptyMap["apple"];present{
+		
+	// }
 	_, present := emptyMap["apple"]
 	if present {
 		fmt.Println("Key 'apple' exists in the map")
