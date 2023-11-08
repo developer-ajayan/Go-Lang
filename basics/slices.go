@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"slices"
 )
 
-
-// slices are a dynamically sized flexible wa of view array elements
-
+//https://rezakhademi.medium.com/slices-in-golang-common-mistakes-and-best-practices-76c30857d4e4
+// slices are a dynamically sized flexible way of view array elements
+// slices are pass by reference by default
 func main() {
 	var slice []int
 	slice = append(slice, 1, 2, 3)
@@ -25,5 +26,25 @@ func main() {
 	sliced := slice3[2:5] // it doesn't copy slice data It creates a new slice value that points to the original array.
 	sliced[0] = 111
 	fmt.Println("sliced ....", slice3)
+
+
+	// copy slices
+	s1 := []int{22, 44, 66, 88}
+
+	s2 := append([]int{}, s1[:2]...)
+	s2 = append(s2, s1[3:]...)
+
+	fmt.Println("s1:", s1)
+	fmt.Println("s2:", s2)
+
+	// slices equal
+	original := []int{22, 44, 66, 88}
+	copyslice := make([]int, len(original))
+	copy(copyslice, original)
+	original[0] = 44
+	original[1] = 22
+	result:=slices.Equal(copyslice, original)
+	fmt.Println(original, copyslice, result)
+
 
 }

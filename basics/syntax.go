@@ -3,7 +3,7 @@ package main
 
 // importing packages
 import "fmt"
-
+//performance : https://blog.stackademic.com/best-practices-in-go-golang-writing-clean-efficient-and-maintainable-code-dccf61542b57
 // function declaration
 func functionName(parameter1 type1, parameter2 type2) returnType {
     // function body

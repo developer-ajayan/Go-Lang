@@ -18,14 +18,37 @@ func Test(c *fiber.Ctx) error {
 func GetBooks(c *fiber.Ctx) error {
 	book_list := models.Books
 	fmt.Println(len(book_list))
-	if len(book_list) > 0 {
-		return c.JSON(book_list)
-	} else {
 
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{
-			"error": "No books created",
+	// retrive book name from request url
+	bookname := "'%" + string(c.Request().URI().QueryString()) + "%'"
+	// fecth from database related data
+	query := fmt.Sprintf("Select name,author from %s where name LIKE %s", "bookapi_books", bookname)
+	// return the list
+	fmt.Println(query)
+	Db := database.DbInfo{}
+	Db.Query = query
+	if conn, err := database.ConnectDatabase(); err != nil {
+		defer Db.DBConn.Close()
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+			"message": "books creation failed",
 		})
+	} else {
+		Db.DBConn = conn
+		defer Db.DBConn.Close()
+		if book_list, erro := Db.FetchRows(); erro == nil {
+			fmt.Println("dataa", book_list)
+			if len(book_list) > 0 {
+				return c.JSON(book_list)
+			}
+		} else {
+			// snet to senrty
+			fmt.Println("fetch row error", erro)
+		}
 	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"error": "No books Found",
+	})
 }
 
 func CreateBooks(c *fiber.Ctx) error {
@@ -53,7 +76,7 @@ func CreateBooks(c *fiber.Ctx) error {
 		})
 	} else {
 		Db.DBConn = conn
-
+		defer Db.DBConn.Close()
 		if erro := Db.InsertRow("bookapi_books", books_list); erro != nil {
 			fmt.Println("eroo", erro)
 		}
