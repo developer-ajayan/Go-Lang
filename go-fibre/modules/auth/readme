@@ -1,0 +1,2 @@
+1. create a auth/checkpoint which will check for incoming auth token
+2. auth service is not responsible for authorization
